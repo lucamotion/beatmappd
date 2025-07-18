@@ -1,4 +1,4 @@
-# beatmappd
+# [beatmappd](https://beatmappd.mittens.cc/)
 
 A place for [osu!](https://osu.ppy.sh/) players to rate beatmaps.
 
