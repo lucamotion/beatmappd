@@ -1,0 +1,15 @@
+export const Genre = {
+  1: "Unspecified",
+  2: "Video Game",
+  3: "Anime",
+  4: "Rock",
+  5: "Pop",
+  6: "Other",
+  7: "Novelty",
+  9: "Hip-Hop",
+  10: "Electronic",
+  11: "Metal",
+  12: "Classical",
+  13: "Folk",
+  14: "Jazz",
+} as const;

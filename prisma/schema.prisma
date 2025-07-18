@@ -1,0 +1,201 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                Int     @id
+  username          String  @unique
+  hasCreatedAccount Boolean @default(false)
+  blacklisted       Boolean @default(false)
+
+  beatmapSets        BeatmapSet[]
+  nominations        Nomination[]
+  difficulties       Beatmap[]
+  ownedBeatmaps      Beatmap[]        @relation("beatmap_owner")
+  ratings            BeatmapRating[]
+  beatmapSetComments BeatmapComment[]
+  lists              List[]
+  listItems          ListUserItem[]
+}
+
+model BeatmapSet {
+  artist        String
+  artistUnicode String
+  // covers
+  creator       String
+  id            Int     @id
+  nsfw          Boolean
+  offset        Int
+  previewUrl    String
+  source        String
+  status        String
+  title         String
+  titleUnicode  String
+  genreId       Int?
+  languageId    Int?
+  hue           Int
+  saturation    Int
+
+  rankedDate DateTime?
+
+  user         User                 @relation(fields: [userId], references: [id])
+  userId       Int
+  nominations  Nomination[]
+  difficulties Beatmap[]
+  comments     BeatmapComment[]
+  listItems    ListBeatmapSetItem[]
+}
+
+enum Ruleset {
+  osu
+  taiko
+  fruits
+  mania
+}
+
+model Nomination {
+  beatmapset   BeatmapSet @relation(fields: [beatmapsetId], references: [id])
+  beatmapsetId Int
+
+  user   User @relation(fields: [userId], references: [id])
+  userId Int
+
+  rulesets Ruleset[]
+
+  @@id([beatmapsetId, userId])
+}
+
+model Beatmap {
+  id          Int     @id
+  mode        Ruleset
+  status      String
+  totalLength Int
+  version     String
+
+  owners User[] @relation("beatmap_owner")
+
+  user   User @relation(fields: [userId], references: [id])
+  userId Int
+
+  accuracy Float
+  ar       Float
+
+  averageRating   Float @default(0)
+  bayesianAverage Float @default(0)
+  ratingCount     Int   @default(0)
+
+  rankYear    Int?
+  rankOverall Int?
+
+  beatmapSet   BeatmapSet @relation(fields: [beatmapSetId], references: [id])
+  beatmapSetId Int
+
+  difficulty Float
+  bpm        Float?
+  cs         Float
+  drain      Float
+  modeInt    Int
+  ranked     Int
+
+  ratings   BeatmapRating[]
+  listItems ListBeatmapItem[]
+}
+
+model BeatmapRating {
+  id Int @id @default(autoincrement())
+
+  beatmap   Beatmap @relation(fields: [beatmapId], references: [id])
+  beatmapId Int
+
+  user   User @relation(fields: [userId], references: [id])
+  userId Int
+
+  rating Int
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, beatmapId])
+}
+
+model BeatmapComment {
+  id Int @id @default(autoincrement())
+
+  beatmapSet   BeatmapSet @relation(fields: [beatmapSetId], references: [id])
+  beatmapSetId Int
+
+  user   User @relation(fields: [userId], references: [id])
+  userId Int
+
+  content   String
+  createdAt DateTime @default(now())
+}
+
+model List {
+  id Int @id @default(autoincrement())
+
+  user   User @relation(fields: [userId], references: [id])
+  userId Int
+
+  name            String
+  description     String?
+  isPublic        Boolean
+  beatmapSetItems ListBeatmapSetItem[]
+  beatmapItems    ListBeatmapItem[]
+  userItems       ListUserItem[]
+}
+
+model ListBeatmapSetItem {
+  id Int @id @default(autoincrement())
+
+  listId Int
+  list   List @relation(fields: [listId], references: [id])
+
+  beatmapSetId Int
+  beatmapSet   BeatmapSet @relation(fields: [beatmapSetId], references: [id])
+
+  comment String?
+
+  order     Int
+  createdAt DateTime @default(now())
+}
+
+model ListBeatmapItem {
+  id Int @id @default(autoincrement())
+
+  listId Int
+  list   List @relation(fields: [listId], references: [id])
+
+  beatmapId Int
+  beatmap   Beatmap @relation(fields: [beatmapId], references: [id])
+
+  comment String?
+
+  order     Int
+  createdAt DateTime @default(now())
+}
+
+model ListUserItem {
+  id Int @id @default(autoincrement())
+
+  listId Int
+  list   List @relation(fields: [listId], references: [id])
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+
+  comment String?
+
+  order     Int
+  createdAt DateTime @default(now())
+}

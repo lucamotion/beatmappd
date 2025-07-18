@@ -1,0 +1,78 @@
+.list-editor {
+  width: 100%;
+}
+
+.list-header {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  font-weight: 600;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.list-name {
+  width: 20rem;
+  margin-bottom: 1.5rem;
+
+  border: none;
+  padding: 0.5rem;
+  font-family: var(--font-geist-sans);
+  font-size: 1rem;
+}
+
+.list-name::placeholder {
+  opacity: 0.5;
+}
+
+.list-description {
+  width: 100%;
+  min-height: 6.5rem;
+  resize: none;
+  border: none;
+  padding: 0.5rem;
+  font-family: var(--font-geist-sans);
+}
+
+.list-description::placeholder {
+  opacity: 0.5;
+}
+
+.delete-list {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #ff0000;
+  max-width: max-content;
+  align-self: flex-start;
+  margin-top: 0.75rem;
+}
+
+.delete-list:hover {
+  text-decoration: underline;
+}
+
+.save-button {
+  background: hsl(240, 40%, 30%);
+  color: rgba(255, 255, 255, 1);
+  border: none;
+  width: fit-content;
+  padding: 0.25rem 1rem;
+  align-self: flex-end;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font-geist-sans);
+}
+
+.save-button:hover {
+  filter: brightness(0.9);
+}
+
+.add-save-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}

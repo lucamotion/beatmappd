@@ -1,0 +1,39 @@
+.form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.input {
+  width: 10rem;
+  padding: 0.25rem;
+  border: none;
+  font-family: var(--font-geist-sans);
+}
+
+.input::placeholder {
+  opacity: 0.5;
+}
+
+.add-button {
+  background: hsl(240, 40%, 30%);
+  color: rgba(255, 255, 255, 1);
+  border: none;
+  width: fit-content;
+  padding: 0.25rem 1rem;
+  align-self: flex-end;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font-geist-sans);
+}
+
+.add-button:hover {
+  filter: brightness(0.9);
+}
+
+.type {
+  font-family: var(--font-geist-sans);
+  border: none;
+  padding: 0.25rem;
+}

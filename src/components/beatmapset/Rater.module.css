@@ -1,0 +1,49 @@
+.rating-container {
+  display: flex;
+  flex-direction: row;
+  gap: 0rem;
+}
+
+.rating-button {
+  height: 2rem;
+  width: 2rem;
+}
+
+.rating-button.selected {
+  fill: #ffcc00;
+}
+
+.star {
+  height: 1.5rem;
+  width: 1.5rem;
+
+  color: rgba(0, 0, 0, 0.75);
+}
+
+.star.hovered {
+  fill: #ffff00;
+}
+
+.star.half {
+  fill: -webkit-linear-gradient(
+    0deg,
+    rgba(255, 255, 0, 1) 0%,
+    rgba(255, 255, 0, 1) 50%,
+    rgba(0, 0, 0, 0.75) 50%,
+    rgba(0, 0, 0, 0.75) 100%
+  );
+}
+
+.rating-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 0.25rem;
+}
